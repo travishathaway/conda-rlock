@@ -1,0 +1,45 @@
+[project]
+authors = ["Travis Hathaway <travis.j.hathaway@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "conda-rlock"
+platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+conda = ">=24.11.3"
+
+[environments]
+test = { features = ["build", "test"], solve-group = "default" }
+build = ["build"]
+
+[feature.build.dependencies]
+maturin = "~=1.2.2"
+pip = "~=23.2.1"
+rust = "~=1.81.0"
+
+[feature.build.tasks]
+build = "PIP_REQUIRE_VIRTUALENV=false maturin develop"
+build-release = "PIP_REQUIRE_VIRTUALENV=false maturin develop --release"
+
+[feature.test.dependencies]
+python = "3.9.*"
+
+ruff = ">=0.3.3,<0.4"
+mypy = "~=1.5.1"
+
+pytest = "~=7.4.0"
+pytest-asyncio = "0.21.1.*"
+pytest-xprocess = ">=0.23.0,<0.24"
+
+[feature.test.tasks]
+test = { cmd = "pytest --doctest-modules", depends_on = ["build"] }
+fmt-python = "ruff format rattler examples tests"
+fmt-rust = "cargo fmt --all"
+lint-python = "ruff check ."
+lint-rust = "cargo clippy --all"
+fmt = { depends_on = ["fmt-python", "fmt-rust"] }
+lint = { depends_on = ["type-check", "lint-python", "lint-rust"] }
+type-check = { cmd = "mypy", depends_on = ["build"] }
