@@ -16,6 +16,7 @@ test = { features = ["build", "test"], solve-group = "default" }
 build = ["build"]
 
 [feature.build.dependencies]
+conda-build = ">=24.11.1"
 maturin = "~=1.2.2"
 pip = "~=23.2.1"
 rust = "~=1.81.0"

@@ -1,0 +1,44 @@
+package:
+  name: conda-auth
+  version: {{ GIT_DESCRIBE_TAG }}.{{ GIT_BUILD_STR }}
+
+source:
+  git_url: ../
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+
+requirements:
+  host:
+    - python >=3.8,<4.0
+    - pip
+    - hatchling
+    - hatch-vcs
+  run:
+    - python >=3.8.1,<4.0.0
+    - click
+    - conda >=23.9.0
+    - keyring
+    - requests
+    - ruamel.yaml <18
+
+test:
+  imports:
+    - conda_auth
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/conda-incubator/conda-auth
+  summary: Conda plugin for improved access to private channels
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - travishathaway
+    - jezdez
