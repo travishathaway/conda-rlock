@@ -1,11 +1,11 @@
 [build-system]
-requires = ["maturin>=1.0,<2.0"]
-build-backend = "maturin"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "conda-rlock"
 dynamic = ["version"]
-description = "A plugin providing lock file capability for conda"
+description = "A conda plugin for creating lock files"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
 classifiers = [
@@ -27,11 +27,10 @@ dependencies = [
 ]
 
 [project.entry-points.conda]
-conda-rlock = "conda_rlock_plugin.hooks"
+conda-rlock = "conda_rlock.hooks"
 
 [tool.setuptools.packages]
 find = {}
 
-[tool.maturin]
-python-source = "python"
-module-name = "conda_rlock_plugin.conda_rlock"
+[tool.hatch.version]
+source = "vcs"
