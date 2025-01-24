@@ -1,5 +1,5 @@
 package:
-  name: conda-rlock
+  name: conda-auth
   version: {{ GIT_DESCRIBE_TAG }}.{{ GIT_BUILD_STR }}
 
 source:
@@ -14,26 +14,31 @@ requirements:
   host:
     - python >=3.8,<4.0
     - pip
-    - maturin
+    - hatchling
+    - hatch-vcs
   run:
-    - python >=3.9,<4.0.0
+    - python >=3.8.1,<4.0.0
+    - click
     - conda >=23.9.0
+    - keyring
+    - requests
+    - ruamel.yaml <18
 
 test:
   imports:
-    - conda_rlock_plugin
-    - conda_rlock_plugin.conda_rlock
+    - conda_auth
   commands:
     - pip check
   requires:
     - pip
 
 about:
-  home: https://github.com/travishathaway/conda-rlock
-  summary: A plugin providing lock file capability for conda
+  home: https://github.com/conda-incubator/conda-auth
+  summary: Conda plugin for improved access to private channels
   license: BSD-3-Clause
   license_file: LICENSE
 
 extra:
   recipe-maintainers:
     - travishathaway
+    - jezdez
