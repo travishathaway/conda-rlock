@@ -36,11 +36,11 @@ pytest-asyncio = "0.21.1.*"
 pytest-xprocess = ">=0.23.0,<0.24"
 
 [feature.test.tasks]
-test = { cmd = "pytest --doctest-modules", depends_on = ["build"] }
+test = { cmd = "pytest --doctest-modules", depends-on = ["build"] }
 fmt-python = "ruff format rattler examples tests"
 fmt-rust = "cargo fmt --all"
 lint-python = "ruff check ."
 lint-rust = "cargo clippy --all"
-fmt = { depends_on = ["fmt-python", "fmt-rust"] }
-lint = { depends_on = ["type-check", "lint-python", "lint-rust"] }
-type-check = { cmd = "mypy", depends_on = ["build"] }
+fmt = { depends-on = ["fmt-python", "fmt-rust"] }
+lint = { depends-on = ["type-check", "lint-python", "lint-rust"] }
+type-check = { cmd = "mypy", depends-on = ["build"] }

@@ -18,6 +18,9 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = { version = "0.23.4", features = ["extension-module"] }
+rattler_conda_types = "0.29.10"
+rattler_installs_packages = "0.10.0"
+rattler_lock = "0.22.39"
 
 [build-dependencies]
 pyo3-build-config = "0.22.6"
