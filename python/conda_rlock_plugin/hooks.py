@@ -1,13 +1,13 @@
-from .conda_rlock import sum_as_string
-
+from conda.base.context import context
 from conda.plugins import hookimpl, CondaSubcommand
+
+from .conda_rlock import get_conda_packages
 
 
 @hookimpl
 def conda_subcommands():
     def main(argv):
-        print(sum_as_string(1, 2))
-        print("conda rlock subcommand")
+        get_conda_packages(context.active_prefix)
 
     yield CondaSubcommand(
         "rlock",
