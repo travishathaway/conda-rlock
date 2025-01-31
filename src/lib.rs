@@ -58,7 +58,12 @@ fn get_pypi_packages(prefix: &str, python_package: &PackageRecord) -> Vec<Distri
     );
     let install_paths = InstallPaths::for_venv(version_components, is_windows);
 
-    find_distributions_in_venv(prefix_path, &install_paths).unwrap()
+    find_distributions_in_venv(prefix_path, &install_paths)
+        .unwrap()
+        .iter()
+        .filter(|dist| dist.installer.as_ref().unwrap_or(&String::new()) == "pip")
+        .cloned()
+        .collect()
 }
 
 // If Python is listed, return a reference to the package
@@ -91,7 +96,10 @@ fn lock_prefix(prefix: &str) -> PyResult<()> {
         println!("PyPI packages for prefix: {}", prefix);
         // println!("Python version: {}", python_package.version);
         for package in get_pypi_packages(prefix, python_package) {
-            println!("- {}", package.name);
+            if package.installer.unwrap_or_default() == "pip" {
+                println!("- {}", package.name);
+            }
+            // println!("{:?}", package);
         }
     }
     Ok(())
