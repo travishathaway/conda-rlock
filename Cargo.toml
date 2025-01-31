@@ -24,4 +24,3 @@ rattler_lock = "0.22.39"
 
 [build-dependencies]
 pyo3-build-config = "0.22.6"
-
