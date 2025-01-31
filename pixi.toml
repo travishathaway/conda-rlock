@@ -7,6 +7,12 @@ platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
 version = "0.1.0"
 
 [tasks]
+build = "cargo build"
+fmt = "cargo fmt"
+lint = "cargo clippy"
+check = "cargo check"
+test = "cargo test"
+rattler = "cargo run --release --"
 
 [dependencies]
 conda = ">=24.11.3"
@@ -34,6 +40,7 @@ mypy = "~=1.5.1"
 pytest = "~=7.4.0"
 pytest-asyncio = "0.21.1.*"
 pytest-xprocess = ">=0.23.0,<0.24"
+typos = ">=1.23.1,<2"
 
 [feature.test.tasks]
 test = { cmd = "pytest --doctest-modules", depends-on = ["build"] }
@@ -44,3 +51,5 @@ lint-rust = "cargo clippy --all"
 fmt = { depends-on = ["fmt-python", "fmt-rust"] }
 lint = { depends-on = ["type-check", "lint-python", "lint-rust"] }
 type-check = { cmd = "mypy", depends-on = ["build"] }
+pre-commit-install = "pre-commit install"
+pre-commit-run = "pre-commit run"
