@@ -17,10 +17,13 @@ name = "conda_rlock"
 crate-type = ["cdylib"]
 
 [dependencies]
+env_logger = "0.11.6"
+log = "0.4.25"
 pyo3 = { version = "0.23.4", features = ["extension-module"] }
-rattler_conda_types = "0.29.10"
+rattler_conda_types = "0.30.0"
 rattler_installs_packages = "0.10.0"
 rattler_lock = "0.22.39"
+url = "2.2.2"
 
 [build-dependencies]
 pyo3-build-config = "0.22.6"
