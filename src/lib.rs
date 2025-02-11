@@ -10,9 +10,13 @@ use rattler_conda_types::{
 };
 use rattler_installs_packages::install::InstallPaths;
 use rattler_installs_packages::python_env::{find_distributions_in_venv, Distribution};
-use rattler_lock::{CondaBinaryData, CondaPackageData, LockFile, UrlOrPath};
+use rattler_lock::{CondaBinaryData, CondaPackageData, LockFile, PypiPackageData, UrlOrPath};
 use std::fs::File;
 use std::io::Write;
+
+mod pypi;
+
+use crate::pypi::{get_available_artifacts, get_package_db};
 
 // Get all the conda packages for a provided prefix
 fn get_conda_packages(prefix: &str) -> Vec<PrefixRecord> {
@@ -166,25 +170,55 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
                 prefix_record.repodata_record.package_record
             );
         }
-        if let Some(python_package) = get_python_package(&conda_packages) {
-            for package in get_pypi_packages(prefix, &python_package.repodata_record.package_record)
-            {
-                warn!("Package: {:?}", package);
-                //lock_file.add_pypi_package(
-                //    "default",
-                //    platform,
-                //    PypiPackageData {
-                //        name: package.name,
-                //        version: package.version.clone(),
-                //        location: todo!(),
-                //        hash: todo!(),
-                //        requires_dist: todo!(),
-                //        requires_python: todo!(),
-                //        editable: todo!()
-                //    },
+    }
 
-                //);
-            }
+    if let Some(python_package) = get_python_package(&conda_packages) {
+        let index_url = "https://pypi.org/simple";
+        let package_db = get_package_db(index_url).unwrap();
+        let pypi_packages =
+            get_pypi_packages(prefix, &python_package.repodata_record.package_record);
+
+        let pypi_artifacts = get_available_artifacts(&package_db, pypi_packages).unwrap();
+
+        // TODO: We got some problems...
+        //       I have no idea about the best way to get the platform for the PyPI packages
+        //       I also need to access both the `Distribution` struct and the `ArtifactInfo`
+        //       struct at the same time. I need to rework some stuff to do this in a sane manner.
+        //       Maybe create a new struct that combines the two structs?
+
+        for (name, artifact) in pypi_artifacts {
+            lock_file.add_pypi_package(
+                "default",
+                platform,
+                PypiPackageData {
+                    name: PackageName::from(name),
+                    version: artifact,
+                    location: UrlOrPath::Url(artifact.url.clone()),
+                    hash: artifact.hashes.unwrap_or_default().sha256,
+                    requires_dist: artifact.requires_dist.clone(),
+                    requires_python: artifact.requires_python.clone(),
+                    editable: false,
+                },
+            );
+        }
+
+        for package in get_pypi_packages(prefix, &python_package.repodata_record.package_record) {
+            println!("{}", package.dist_info.display());
+            //lock_file.add_pypi_package(
+            //    "default",
+            //    platform,
+            //    PypiPackageData {
+            //        name: package.name,
+            //        version: package.version.clone(),
+            //        location: todo!(),
+            //        hash: todo!(),
+            //        requires_dist: todo!(),
+            //        requires_python: todo!(),
+            //        editable: todo!()
+            //    },
+            //
+
+            //);
         }
     }
 
