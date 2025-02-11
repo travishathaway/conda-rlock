@@ -34,7 +34,7 @@ pub fn get_package_db(index_url: &str) -> miette::Result<PackageDb> {
 /// Used to retrieve information from the index for the provided packages
 pub fn get_available_artifacts(
     package_db: &PackageDb,
-    packages: Vec<Distribution>,
+    packages: &Vec<Distribution>,
 ) -> miette::Result<HashMap<NormalizedPackageName, Arc<ArtifactInfo>>> {
     let mut artifacts = HashMap::new();
 

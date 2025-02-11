@@ -1,16 +1,23 @@
+use rattler_installs_packages::artifacts;
+use rattler_installs_packages::types::NormalizedPackageName;
+use std::collections::HashMap;
 use std::env;
 use std::path::Path;
 use std::str::FromStr;
 use url::Url;
 
 use log::warn;
+use pep440_rs::{Version as Pep440Version, VersionSpecifiers as Pep440VersionSpecifiers};
+use pep508_rs::PackageName as Pep508PackageName;
 use pyo3::prelude::*;
 use rattler_conda_types::{
     ChannelUrl, Component, PackageName, PackageRecord, Platform, PrefixRecord, Version,
 };
 use rattler_installs_packages::install::InstallPaths;
-use rattler_installs_packages::python_env::{find_distributions_in_venv, Distribution};
-use rattler_lock::{CondaBinaryData, CondaPackageData, LockFile, PypiPackageData, UrlOrPath};
+use rattler_installs_packages::python_env::{find_distributions_in_venv, Distribution, WheelTag};
+use rattler_lock::{
+    CondaBinaryData, CondaPackageData, LockFile, PackageHashes, PypiPackageData, UrlOrPath,
+};
 use std::fs::File;
 use std::io::Write;
 
@@ -174,11 +181,17 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
 
     if let Some(python_package) = get_python_package(&conda_packages) {
         let index_url = "https://pypi.org/simple";
-        let package_db = get_package_db(index_url).unwrap();
+        let package_db = get_package_db(index_url).unwrap(); // TODO: handle error
         let pypi_packages =
             get_pypi_packages(prefix, &python_package.repodata_record.package_record);
 
-        let pypi_artifacts = get_available_artifacts(&package_db, pypi_packages).unwrap();
+        let pypi_artifacts = get_available_artifacts(&package_db, &pypi_packages).unwrap();
+
+        let mut distribution_lookup: HashMap<NormalizedPackageName, Distribution> = HashMap::new();
+
+        for dist in pypi_packages {
+            distribution_lookup.insert(dist.name, dist);
+        }
 
         // TODO: We got some problems...
         //       I have no idea about the best way to get the platform for the PyPI packages
@@ -187,16 +200,29 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
         //       Maybe create a new struct that combines the two structs?
 
         for (name, artifact) in pypi_artifacts {
+            let dist = distribution_lookup.get(&name).unwrap();
+
+            println!("{:?}", dist.tags);
+
             lock_file.add_pypi_package(
                 "default",
-                platform,
+                Platform::NoArch,
                 PypiPackageData {
-                    name: PackageName::from(name),
-                    version: artifact,
+                    name: Pep508PackageName::new(name.to_string()).unwrap(), // TODO: handle error
+                    // TODO: The following is not nice; I do it because rattler_installs_packages and rattler_lock
+                    //       depend on different versions of pep440_rs and pep508_rs.
+                    version: Pep440Version::from_str(&dist.version.to_string()).unwrap(),
                     location: UrlOrPath::Url(artifact.url.clone()),
-                    hash: artifact.hashes.unwrap_or_default().sha256,
-                    requires_dist: artifact.requires_dist.clone(),
-                    requires_python: artifact.requires_python.clone(),
+                    hash: Some(
+                        PackageHashes::Sha256(artifact.hashes.unwrap().sha256.unwrap()), // TODO: handle unwraps better
+                    ),
+                    requires_dist: artifact,
+                    requires_python: Some(
+                        Pep440VersionSpecifiers::from_str(
+                            &artifact.requires_python.unwrap().to_string(),
+                        )
+                        .unwrap(),
+                    ),
                     editable: false,
                 },
             );
