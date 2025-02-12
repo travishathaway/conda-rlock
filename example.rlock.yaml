@@ -301,6 +301,11 @@ environments:
       - conda: https://repo.anaconda.com/pkgs/main/noarch/six-1.16.0-pyhd3eb1b0_1.conda
       - conda: https://repo.anaconda.com/pkgs/main/noarch/toml-0.10.2-pyhd3eb1b0_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/noarch/tzdata-2024b-h04d1e81_0.conda
+      - pypi: https://files.pythonhosted.org/packages/b1/fe/e8c672695b37eecc5cbf43e1d0638d88d66ba3a44c4d321c796f4e59167f/beautifulsoup4-4.12.3-py3-none-any.whl#sha256=b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed
+      - pypi: https://files.pythonhosted.org/packages/38/6f/f5fbc992a329ee4e0f288c1fe0e2ad9485ed064cac731ed2fe47dcc38cbf/chardet-5.2.0-py3-none-any.whl#sha256=e1cf59446890a00105fe7b7912492ea04b6e6f06d4b742b2c788469e34c82970
+      - pypi: https://files.pythonhosted.org/packages/52/06/91c67ab53397021c925fe98f33f72b0ba10edbac5ae11d60543f8ca078c6/libarchive_c-5.1-py2.py3-none-any.whl#sha256=8f23af20ef28503223284ec20ec7b695b0d88337c937aec62152a6953ed33a5a
+      - pypi: https://files.pythonhosted.org/packages/21/11/4af184fbd8ae13daa13953212b27a212f4e63772ca8a0dd84d08b60ed206/pkginfo-1.12.0-py3-none-any.whl#sha256=dcd589c9be4da8973eceffa247733c144812759aa67eaf4bbf97016a02f39088
+      - pypi: https://files.pythonhosted.org/packages/d1/c2/fe97d779f3ef3b15f05c94a2f1e3d21732574ed441687474db9d342a7315/soupsieve-2.6-py3-none-any.whl#sha256=e72c4ff06e4fb6e4b5a9f0f55fe6e81514581fca1515028625d0f299c602ccc9
 packages:
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/_libgcc_mutex-0.1-main.conda
   sha256: 476626712f60e5ef0fe04c354727152b1ee5285d57ccd3575c7be930122bd051
@@ -405,6 +410,18 @@ packages:
   license: MIT
   size: 156096
   timestamp: 1734533157
+- pypi: https://files.pythonhosted.org/packages/b1/fe/e8c672695b37eecc5cbf43e1d0638d88d66ba3a44c4d321c796f4e59167f/beautifulsoup4-4.12.3-py3-none-any.whl#sha256=b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed
+  name: beautifulsoup4
+  version: 4.12.3
+  sha256: b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed
+  requires_dist:
+  - soupsieve>1.2
+  - cchardet ; extra == 'cchardet'
+  - chardet ; extra == 'chardet'
+  - charset-normalizer ; extra == 'charset-normalizer'
+  - html5lib ; extra == 'html5lib'
+  - lxml ; extra == 'lxml'
+  requires_python: '>=3.6.0'
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/blinker-1.6.2-py310h06a4308_0.conda
   sha256: 3a75ffc0ac49f947e0fe7cf0aa9f302970979ca11c1d707d7b51c5ff84168089
   md5: 504e4b86e5a524ef0475a4386b8751e3
@@ -488,6 +505,11 @@ packages:
   license: MIT
   size: 257396
   timestamp: 1736182601
+- pypi: https://files.pythonhosted.org/packages/38/6f/f5fbc992a329ee4e0f288c1fe0e2ad9485ed064cac731ed2fe47dcc38cbf/chardet-5.2.0-py3-none-any.whl#sha256=e1cf59446890a00105fe7b7912492ea04b6e6f06d4b742b2c788469e34c82970
+  name: chardet
+  version: 5.2.0
+  sha256: e1cf59446890a00105fe7b7912492ea04b6e6f06d4b742b2c788469e34c82970
+  requires_python: '>=3.7'
 - conda: https://repo.anaconda.com/pkgs/main/noarch/charset-normalizer-3.3.2-pyhd3eb1b0_0.conda
   sha256: 1cdc690b822b7518ab3b73c06115f6b95037ff111378e6d2e6508c4602df558e
   md5: c6fea3691e85cf7f568b0618ec29fc4f
@@ -958,6 +980,10 @@ packages:
   license: BSD-2-Clause
   size: 958563
   timestamp: 1733942599
+- pypi: https://files.pythonhosted.org/packages/52/06/91c67ab53397021c925fe98f33f72b0ba10edbac5ae11d60543f8ca078c6/libarchive_c-5.1-py2.py3-none-any.whl#sha256=8f23af20ef28503223284ec20ec7b695b0d88337c937aec62152a6953ed33a5a
+  name: libarchive-c
+  version: '5.1'
+  sha256: 8f23af20ef28503223284ec20ec7b695b0d88337c937aec62152a6953ed33a5a
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/libcurl-8.11.1-hc9e6f67_0.conda
   sha256: e3c731bc42173b809ff1a8d8db219f6501743cd0a24a00035f2e1c4438a1381f
   md5: 35c32ae0ed144928f0e531698b6e26f5
@@ -1327,6 +1353,15 @@ packages:
   license: MIT
   size: 2430997
   timestamp: 1737992065
+- pypi: https://files.pythonhosted.org/packages/21/11/4af184fbd8ae13daa13953212b27a212f4e63772ca8a0dd84d08b60ed206/pkginfo-1.12.0-py3-none-any.whl#sha256=dcd589c9be4da8973eceffa247733c144812759aa67eaf4bbf97016a02f39088
+  name: pkginfo
+  version: 1.12.0
+  sha256: dcd589c9be4da8973eceffa247733c144812759aa67eaf4bbf97016a02f39088
+  requires_dist:
+  - pytest ; extra == 'testing'
+  - pytest-cov ; extra == 'testing'
+  - wheel ; extra == 'testing'
+  requires_python: '>=3.8'
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/platformdirs-3.10.0-py310h06a4308_0.conda
   sha256: ff615f4b426f74304dadd47c92da03c15043ce19655a893ca5c2b2f76b3ce8e4
   md5: e75261f061adb0fcb519c8b842789132
@@ -1822,6 +1857,11 @@ packages:
   license: MIT
   size: 18894
   timestamp: 1644875974
+- pypi: https://files.pythonhosted.org/packages/d1/c2/fe97d779f3ef3b15f05c94a2f1e3d21732574ed441687474db9d342a7315/soupsieve-2.6-py3-none-any.whl#sha256=e72c4ff06e4fb6e4b5a9f0f55fe6e81514581fca1515028625d0f299c602ccc9
+  name: soupsieve
+  version: '2.6'
+  sha256: e72c4ff06e4fb6e4b5a9f0f55fe6e81514581fca1515028625d0f299c602ccc9
+  requires_python: '>=3.8'
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/spdlog-1.11.0-hdb19cb5_0.conda
   sha256: bac82a4382c60aa28455305fd2ead3b687dcaa35ebd15a6ac42190e6e32e65df
   md5: 023cfe6341f1d90dee2016e608538537

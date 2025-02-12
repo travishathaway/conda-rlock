@@ -42,3 +42,8 @@ contained in the `METADATA` folder.
 
 I think the easiest way to do it from my code is just open the `METADATA` file myself and
 just passing the bytes to the `try_from` method.
+
+## 2025-02-12
+
+Finally able to generate a lock file with PyPI dependencies 🥲. The code is a still pretty
+messy and needs lots more testing, but thankfully I have reached a very important first milestone.
