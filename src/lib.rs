@@ -51,7 +51,7 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
                 .repodata_record
                 .channel
                 .as_ref()
-                .unwrap()
+                .unwrap() // TODO: handle this error
                 .to_string()
         })
         .collect();
@@ -88,7 +88,7 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
         )?;
     }
 
-    let lockfile_str = lock_file.finish().render_to_string().unwrap();
+    let lockfile_str = lock_file.finish().render_to_string().unwrap(); // TODO: Handle error
 
     write_string_to_file(filename, &lockfile_str).map_err(|err| {
         PyErr::new::<pyo3::exceptions::PyOSError, _>(format!("Error writing lockfile: {:?}", err))

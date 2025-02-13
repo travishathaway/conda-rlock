@@ -82,7 +82,7 @@ pub fn get_pypi_packages(
 ) -> miette::Result<Vec<PythonPackage>> {
     let prefix_path = Path::new(prefix);
     let is_windows = env::consts::OS == "windows";
-    let version_components = get_major_minor_bug(&python_package.version).unwrap();
+    let version_components = get_major_minor_bug(&python_package.version).unwrap(); // TODO: handle this error
     let version_components = (
         version_components.0 as u32,
         version_components.1 as u32,
@@ -149,12 +149,12 @@ pub fn get_available_artifacts(
 ) -> miette::Result<HashMap<NormalizedPackageName, Arc<ArtifactInfo>>> {
     let mut artifacts = HashMap::new();
 
-    let runtime = Runtime::new().unwrap();
+    let runtime = Runtime::new().unwrap(); // TODO: handle this error
 
     runtime.block_on(async {
         for package in packages {
             let request = ArtifactRequest::FromIndex(package.distribution.name.clone());
-            let available_artifacts = package_db.available_artifacts(request).await.unwrap();
+            let available_artifacts = package_db.available_artifacts(request).await.unwrap(); // TODO: handle this error
 
             let artifact_name = package.distribution.name.clone();
             if let Ok(matching_artifact) =
@@ -205,13 +205,13 @@ pub fn add_pypi_packages(
     let index_url = "https://pypi.org/simple";
     let package_db = get_package_db(index_url).unwrap(); // TODO: handle error
 
-    let artifacts = get_available_artifacts(&package_db, &packages).unwrap();
+    let artifacts = get_available_artifacts(&package_db, &packages).unwrap(); // TODO: handle error
 
     let mut distribution_lookup: HashMap<NormalizedPackageName, PythonPackage> = HashMap::new();
 
     if !packages.is_empty() {
         let indexes = PypiIndexes {
-            indexes: vec![Url::parse(index_url).unwrap()],
+            indexes: vec![Url::parse(index_url).unwrap()], // TODO: handle error? (maybe)
             find_links: vec![],
         };
         lock_file.set_pypi_indexes(environment, indexes);
@@ -222,7 +222,7 @@ pub fn add_pypi_packages(
     }
 
     for (name, artifact) in artifacts {
-        let package = distribution_lookup.get(&name).unwrap();
+        let package = distribution_lookup.get(&name).unwrap(); // TODO: handle error
 
         lock_file.add_pypi_package(
             environment,

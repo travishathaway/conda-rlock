@@ -11,7 +11,7 @@ use rattler_lock::{CondaBinaryData, CondaPackageData, LockFileBuilder, UrlOrPath
 pub fn get_conda_packages(prefix: &str) -> Vec<PrefixRecord> {
     let prefix_path = Path::new(prefix);
 
-    PrefixRecord::collect_from_prefix::<PrefixRecord>(prefix_path).unwrap()
+    PrefixRecord::collect_from_prefix::<PrefixRecord>(prefix_path).unwrap() // TODO: handle error
 }
 
 /// Used to remove that last to path segments of a URL
