@@ -3,153 +3,9 @@ environments:
   default:
     channels:
     - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
     - url: https://conda.anaconda.org/conda-forge
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://conda.anaconda.org/conda-forge
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
-    - url: https://repo.anaconda.com/pkgs/main
+    indexes:
+    - https://pypi.org/simple
     packages:
       linux-64:
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/_libgcc_mutex-0.1-main.conda
@@ -218,7 +74,7 @@ environments:
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/markdown-it-py-2.2.0-py310h06a4308_1.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/markupsafe-2.1.3-py310h5eee18b_1.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/mdurl-0.1.0-py310h06a4308_0.conda
-      - conda: https://repo.anaconda.com/pkgs/main/linux-64/menuinst-2.2.0-py310h06a4308_0.conda
+      - conda: https://repo.anaconda.com/pkgs/main/linux-64/menuinst-2.2.0-py310h06a4308_1.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/more-itertools-10.3.0-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/nbformat-5.10.4-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/ncurses-6.4-h6a678d5_0.conda
@@ -238,7 +94,7 @@ environments:
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/pydantic-settings-2.6.1-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/pygments-2.15.1-py310h06a4308_1.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/pysocks-1.7.1-py310h06a4308_0.conda
-      - conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-7.4.4-py310h06a4308_0.conda
+      - conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-8.3.4-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-cov-6.0.0-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-mock-3.14.0-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-rerunfailures-12.0-py310h06a4308_0.conda
@@ -269,7 +125,7 @@ environments:
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/sqlite-3.45.3-h5eee18b_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/tk-8.6.14-h39e8969_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/tomli-2.0.1-py310h06a4308_0.conda
-      - conda: https://repo.anaconda.com/pkgs/main/linux-64/tqdm-4.66.5-py310h2f386ee_0.conda
+      - conda: https://repo.anaconda.com/pkgs/main/linux-64/tqdm-4.67.1-py310h2f386ee_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/traitlets-5.14.3-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/truststore-0.8.0-py310h06a4308_0.conda
       - conda: https://repo.anaconda.com/pkgs/main/linux-64/typer-0.9.0-py310h06a4308_0.conda
@@ -1221,16 +1077,16 @@ packages:
   license: MIT
   size: 18391
   timestamp: 1659716070
-- conda: https://repo.anaconda.com/pkgs/main/linux-64/menuinst-2.2.0-py310h06a4308_0.conda
-  sha256: 3c1683876594498657ba0bd4c3aeb33e9bea2f9a66c2ab33c6b6ca14bb9af686
-  md5: bfb7b70d35990db9a20ddbd7946fb9ba
+- conda: https://repo.anaconda.com/pkgs/main/linux-64/menuinst-2.2.0-py310h06a4308_1.conda
+  sha256: 48774980a2f661251b015dd43d481777238f6dcca97b5ea85858393e60d3d7b2
+  md5: e581b26e4016611e29c449f46d0df283
   depends:
   - python >=3.10,<3.11.0a0
   arch: x86_64
   platform: linux
   license: BSD-3-Clause AND MIT
-  size: 231165
-  timestamp: 1731364935
+  size: 229305
+  timestamp: 1738943547
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/more-itertools-10.3.0-py310h06a4308_0.conda
   sha256: aa28d4c29019b875769b4a29bac20ddba0fb206a30de64a9460639e6161c2b5f
   md5: 9b6663a0196bba2b3b01c9fb89dfee28
@@ -1490,23 +1346,23 @@ packages:
   license: BSD 3-Clause
   size: 28895
   timestamp: 1640793693
-- conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-7.4.4-py310h06a4308_0.conda
-  sha256: 5de5dce6674ece957a6c0e9e1a8fe46a8efdf8dc8885e039747aceb77c402c32
-  md5: 1c0b46e71565c9ea4abd5397049c8c17
+- conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-8.3.4-py310h06a4308_0.conda
+  sha256: 2783ae4b1a85ccbd00c7abaa7aea7ee7d775226b3e8c7440bc597327400d2575
+  md5: cdd54372e6dd186b3a09274f7df40400
   depends:
-  - exceptiongroup >=1.0.0
-  - iniconfig
   - packaging
-  - pluggy >=0.12,<2.0
+  - iniconfig
   - python >=3.10,<3.11.0a0
-  - tomli >=1.0.0
+  - exceptiongroup >=1.0.0
+  - pluggy <2,>=1.5
+  - tomli >=1
   constrains:
   - pytest-faulthandler >=2
   arch: x86_64
   platform: linux
   license: MIT
-  size: 1031912
-  timestamp: 1717793300
+  size: 1096737
+  timestamp: 1738938964
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/pytest-cov-6.0.0-py310h06a4308_0.conda
   sha256: 62b1db79701ccfc7feef221aa2840fce4618fcce336eb5ae650dc9340057d7a8
   md5: 3adde7fddd204511bfff85a2bde78348
@@ -1917,9 +1773,9 @@ packages:
   license: MIT
   size: 24985
   timestamp: 1657175627
-- conda: https://repo.anaconda.com/pkgs/main/linux-64/tqdm-4.66.5-py310h2f386ee_0.conda
-  sha256: 7a75e61a1b26e594210cfde7bf6c71f42201b42d4db8bf5adca3741daff3d32c
-  md5: 1c8ef064ef328f5ae08ee67ab91e34c4
+- conda: https://repo.anaconda.com/pkgs/main/linux-64/tqdm-4.67.1-py310h2f386ee_0.conda
+  sha256: 996a601f98a55d12d6922c70289cfc3b990151c48d8202652a72055fa1786a3c
+  md5: 841b03c230e227924b389158b007044c
   depends:
   - python >=3.10,<3.11.0a0
   constrains:
@@ -1927,8 +1783,8 @@ packages:
   arch: x86_64
   platform: linux
   license: MPL-2.0 AND MIT
-  size: 137271
-  timestamp: 1724854095
+  size: 137599
+  timestamp: 1738943623
 - conda: https://repo.anaconda.com/pkgs/main/linux-64/traitlets-5.14.3-py310h06a4308_0.conda
   sha256: fe275935e3126ebad94cc24e45e591caba6f36a31e2af5b1ccfb7b35d37f431a
   md5: 41493f5ef185d46a832281f22678cb5a

@@ -47,3 +47,30 @@ just passing the bytes to the `try_from` method.
 
 Finally able to generate a lock file with PyPI dependencies 🥲. The code is a still pretty
 messy and needs lots more testing, but thankfully I have reached a very important first milestone.
+
+### TODO
+
+One thing I forgot to do was address the issue with the "platform" specifier. For the time being,
+I just put `Platform::Noarch`, but I will eventually need to figure out how to map the value
+we get from the package metadata and map it to an appropriate value.
+
+## 2025-02-13
+
+Random notes:
+
+- Learned that it is safe to map subdir to Platform for rattler lock files
+- This is how pixi currently maps the python package platform values to conda values:
+    - https://github.com/prefix-dev/pixi/blob/86701ad3ba9f3cb3f5779913969c2e1ad6d64bc6/crates/pypi_modifiers/src/pypi_tags.rs
+- All the exceptions I raise are PyOSError ones; not sure this is the correct thing to do
+
+### TODO
+
+- I need to start thinking about how I'm going to test this
+    - How do I create a conda environment to lock?
+    - How do I inspect the lock file I created to verify its validity?
+    - How do I test the various error states in the program?
+- I still don't have a way to map the PyPI package platform over to the conda platform
+    - Might make sense to start working on the `rattler_pypi_interop` crate to see what changes
+      I need to have there in order to make this work.
+    - One thing to investigate would be to add the platform mapping code from `pixi` to this
+      new crate.

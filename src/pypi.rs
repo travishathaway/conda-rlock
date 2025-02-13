@@ -1,5 +1,7 @@
-use std::env;
+//! This module contains all the logic for adding PyPI packages to a lock file.
+
 use std::collections::HashMap;
+use std::env;
 use std::path::Path;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -9,8 +11,12 @@ use indexmap::IndexMap;
 ///       I'm hoping this will be fixed once rattler_pypi_interop is available as a crate in rattler proper.
 use pep440_rs::{Version as Pep440Version, VersionSpecifiers as Pep440VersionSpecifiers};
 use pep508_rs::{PackageName as Pep508PackageName, Requirement as Pep508Requirement};
-use rattler_conda_types::{Component, Platform, PackageRecord, Version};
-use rattler_lock::{LockFileBuilder, PackageHashes, PypiPackageData, PypiPackageEnvironmentData, UrlOrPath};
+use rattler_conda_types::{Component, PackageRecord, Platform, Version};
+use rattler_lock::{
+    LockFileBuilder, PackageHashes, PypiIndexes, PypiPackageData, PypiPackageEnvironmentData,
+    UrlOrPath,
+};
+
 use rattler_installs_packages::index::{
     ArtifactRequest, CheckAvailablePackages, PackageDb, PackageSourcesBuilder,
 };
@@ -18,7 +24,10 @@ use rattler_installs_packages::install::InstallPaths;
 use rattler_installs_packages::normalize_index_url;
 use rattler_installs_packages::python_env::{find_distributions_in_venv, Distribution};
 use rattler_installs_packages::resolve::PypiVersion;
-use rattler_installs_packages::types::{ArtifactInfo, ArtifactName, NormalizedPackageName, WheelCoreMetadata};
+use rattler_installs_packages::types::{
+    ArtifactInfo, ArtifactName, NormalizedPackageName, WheelCoreMetadata,
+};
+
 use reqwest::Client;
 use reqwest_middleware::ClientWithMiddleware;
 use tokio::runtime::Runtime;
@@ -26,11 +35,11 @@ use url::Url;
 
 #[derive(Debug, Clone)]
 /// Used to store both information about the distribution and the metadata of the wheel
-pub struct PythonPackage{
+pub struct PythonPackage {
     /// The distribution information
     distribution: Distribution,
     /// The metadata of the wheel found in the `METADATA` file of the Python package
-    metadata: WheelCoreMetadata
+    metadata: WheelCoreMetadata,
 }
 
 /// Get the major, minor, and bug version components of a version
@@ -67,7 +76,10 @@ fn get_major_minor_bug(version: &Version) -> Option<(u64, u64, u64)> {
 }
 
 /// Get all the PyPI packages for a provided prefix
-pub fn get_pypi_packages(prefix: &str, python_package: &PackageRecord) -> miette::Result<Vec<PythonPackage>> {
+pub fn get_pypi_packages(
+    prefix: &str,
+    python_package: &PackageRecord,
+) -> miette::Result<Vec<PythonPackage>> {
     let prefix_path = Path::new(prefix);
     let is_windows = env::consts::OS == "windows";
     let version_components = get_major_minor_bug(&python_package.version).unwrap();
@@ -84,18 +96,19 @@ pub fn get_pypi_packages(prefix: &str, python_package: &PackageRecord) -> miette
     distributions
         .iter()
         .filter(|dist| dist.installer.as_ref().unwrap_or(&String::new()) == "pip")
-        .map(|dist| {
-            get_python_package(prefix_path, dist)
-        })
+        .map(|dist| get_python_package(prefix_path, dist))
         .collect()
 }
 
 /// Using both the `prefix` and `Distribution.dist_info` fields, this function reads the metadata
 /// from the `METADATA` file that should be on disk. We then return a `PythonPackage` struct that
 /// provides both information about the distribution and its metadata in a single struct.
-/// 
+///
 /// TODO: Should this actually be a method on the `PythonPackage` struct itself?
-pub fn get_python_package(prefix: &Path, distribution: &Distribution) -> miette::Result<PythonPackage> {
+pub fn get_python_package(
+    prefix: &Path,
+    distribution: &Distribution,
+) -> miette::Result<PythonPackage> {
     let path_to_metadata = prefix.join(&distribution.dist_info).join("METADATA");
 
     let metadata_bytes = std::fs::read(&path_to_metadata)
@@ -145,7 +158,7 @@ pub fn get_available_artifacts(
 
             let artifact_name = package.distribution.name.clone();
             if let Ok(matching_artifact) =
-                match_distribution_with_artifact(package.distribution.clone(), &available_artifacts)
+                match_distribution_with_artifact(package.distribution.clone(), available_artifacts)
             {
                 artifacts.insert(artifact_name, matching_artifact);
             }
@@ -182,13 +195,12 @@ pub fn match_distribution_with_artifact(
     ))
 }
 
-
 /// Add PyPI packages to lock file
 pub fn add_pypi_packages(
     lock_file: &mut LockFileBuilder,
     environment: &str,
     platform: Platform,
-    packages: Vec<PythonPackage>
+    packages: Vec<PythonPackage>,
 ) -> miette::Result<()> {
     let index_url = "https://pypi.org/simple";
     let package_db = get_package_db(index_url).unwrap(); // TODO: handle error
@@ -196,6 +208,14 @@ pub fn add_pypi_packages(
     let artifacts = get_available_artifacts(&package_db, &packages).unwrap();
 
     let mut distribution_lookup: HashMap<NormalizedPackageName, PythonPackage> = HashMap::new();
+
+    if !packages.is_empty() {
+        let indexes = PypiIndexes {
+            indexes: vec![Url::parse(index_url).unwrap()],
+            find_links: vec![],
+        };
+        lock_file.set_pypi_indexes(environment, indexes);
+    }
 
     for package in packages {
         distribution_lookup.insert(package.distribution.name.clone(), package);
@@ -208,19 +228,33 @@ pub fn add_pypi_packages(
             environment,
             platform,
             PypiPackageData {
-                name: Pep508PackageName::new(name.to_string()).map_err(|e| miette::miette!("Failed to create package name: {:?}", e))?,
-                version: Pep440Version::from_str(&package.distribution.version.to_string()).map_err(|e| miette::miette!("Failed to parse version: {:?}", e))?,
+                name: Pep508PackageName::new(name.to_string())
+                    .map_err(|e| miette::miette!("Failed to create package name: {:?}", e))?,
+                version: Pep440Version::from_str(&package.distribution.version.to_string())
+                    .map_err(|e| miette::miette!("Failed to parse version: {:?}", e))?,
                 location: UrlOrPath::Url(artifact.url.clone()),
-                hash: artifact.hashes.as_ref()
-                    .and_then(|hashes| hashes.sha256.clone())
-                    .map(PackageHashes::Sha256)
-                ,
-                requires_dist: package.metadata.requires_dist
+                hash: artifact
+                    .hashes
+                    .as_ref()
+                    .and_then(|hashes| hashes.sha256)
+                    .map(PackageHashes::Sha256),
+                requires_dist: package
+                    .metadata
+                    .requires_dist
                     .iter()
-                    .map(|req| Pep508Requirement::from_str(&req.to_string()).map_err(|e| miette::miette!("Failed to parse requirement: {:?}", e)))
+                    .map(|req| {
+                        Pep508Requirement::from_str(&req.to_string())
+                            .map_err(|e| miette::miette!("Failed to parse requirement: {:?}", e))
+                    })
                     .collect::<Result<Vec<_>, _>>()?,
-                requires_python: artifact.requires_python.as_ref()
-                    .map(|req| Pep440VersionSpecifiers::from_str(&req.to_string()).map_err(|e| miette::miette!("Failed to parse requires_python: {:?}", e)))
+                requires_python: artifact
+                    .requires_python
+                    .as_ref()
+                    .map(|req| {
+                        Pep440VersionSpecifiers::from_str(&req.to_string()).map_err(|e| {
+                            miette::miette!("Failed to parse requires_python: {:?}", e)
+                        })
+                    })
                     .transpose()?,
                 editable: false,
             },
