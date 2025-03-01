@@ -1,0 +1,13 @@
+---
+source: src/pypi.rs
+expression: python_package.distribution
+---
+Distribution(
+  name: "keyring",
+  version: "25.6.0",
+  installer: Some("pip"),
+  dist_info: "lib/python3.13/site-packages/keyring-25.6.0.dist-info",
+  tags: Some([
+    "py3-none-any",
+  ]),
+)

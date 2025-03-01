@@ -6,7 +6,7 @@ use std::collections::HashSet;
 use std::path::Path;
 
 use pyo3::prelude::*;
-use rattler_conda_types::{PackageName, Platform, PrefixRecord};
+use rattler_conda_types::{PackageName, PrefixRecord};
 use rattler_lock::LockFile;
 use std::fs::File;
 use std::io::Write;
@@ -18,7 +18,7 @@ use crate::conda::{add_conda_packages, get_conda_packages};
 use crate::pypi::{add_pypi_packages, get_pypi_packages};
 
 // If Python is listed, return a reference to the package
-fn get_python_package(packages: &[PrefixRecord]) -> Option<&PrefixRecord> {
+pub(crate) fn get_python_package(packages: &[PrefixRecord]) -> Option<&PrefixRecord> {
     let name = PackageName::new_unchecked("python");
     packages
         .iter()
@@ -41,6 +41,7 @@ fn write_string_to_file(filename: &str, content: &str) -> std::io::Result<()> {
 fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
     let conda_packages = get_conda_packages(prefix);
     let environment = "default";
+    let index_url = "https://pypi.org/simple/";
     let mut lock_file = LockFile::builder();
 
     // Create a unique iterable of channels
@@ -78,7 +79,7 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
 
         // TODO: The platform is not correct. We need to inspect each individual Python package
         //       to get the correct value.
-        add_pypi_packages(&mut lock_file, environment, Platform::NoArch, pypi_packages).map_err(
+        add_pypi_packages(&mut lock_file, environment, pypi_packages, index_url).map_err(
             |err| {
                 PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
                     "Error locking PyPI packages: {:?}",
