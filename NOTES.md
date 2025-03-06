@@ -74,3 +74,10 @@ Random notes:
       I need to have there in order to make this work.
     - One thing to investigate would be to add the platform mapping code from `pixi` to this
       new crate.
+
+
+## 2025-03-06
+
+### TODO
+
+- Write tests for the `conda.rs` module

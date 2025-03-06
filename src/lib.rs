@@ -4,9 +4,10 @@
 
 use std::collections::HashSet;
 use std::path::Path;
+use std::str::FromStr;
 
 use pyo3::prelude::*;
-use rattler_conda_types::{PackageName, PrefixRecord};
+use rattler_conda_types::{PackageName, Platform, PrefixRecord};
 use rattler_lock::LockFile;
 use std::fs::File;
 use std::io::Write;
@@ -23,6 +24,25 @@ pub(crate) fn get_python_package(packages: &[PrefixRecord]) -> Option<&PrefixRec
     packages
         .iter()
         .find(|package| package.repodata_record.package_record.name == name)
+}
+
+/// Make a best guess at the platform being used by examining the installed conda packages
+///
+/// Normally, environments only have single combination of "noarch" and another platform (like "linux-64").
+/// This function will return the first platform it finds that is not "noarch", and if more than two
+/// exist in an environment (which should never be the case), it might behave unpredictably.
+fn get_platform(prefix_records: &Vec<PrefixRecord>) -> Option<Platform> {
+    for record in prefix_records {
+        let platform = Platform::from_str(&record.repodata_record.package_record.subdir)
+            .unwrap_or(Platform::NoArch);
+
+        match platform {
+            Platform::NoArch => continue,
+            _ => return Some(platform),
+        }
+    }
+
+    None
 }
 
 fn write_string_to_file(filename: &str, content: &str) -> std::io::Result<()> {
@@ -56,10 +76,11 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
                 .to_string()
         })
         .collect();
+    let platform = get_platform(&conda_packages).unwrap_or(Platform::NoArch);
 
     lock_file.set_channels(environment, channels);
 
-    add_conda_packages(&mut lock_file, environment, &conda_packages).map_err(|err| {
+    add_conda_packages(&mut lock_file, environment, &conda_packages, platform).map_err(|err| {
         PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
             "Error locking conda packages: {:?}",
             err
@@ -77,16 +98,19 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
                 },
             )?;
 
-        // TODO: The platform is not correct. We need to inspect each individual Python package
-        //       to get the correct value.
-        add_pypi_packages(&mut lock_file, environment, pypi_packages, index_url).map_err(
-            |err| {
-                PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
-                    "Error locking PyPI packages: {:?}",
-                    err
-                ))
-            },
-        )?;
+        add_pypi_packages(
+            &mut lock_file,
+            environment,
+            pypi_packages,
+            index_url,
+            platform,
+        )
+        .map_err(|err| {
+            PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
+                "Error locking PyPI packages: {:?}",
+                err
+            ))
+        })?;
     }
 
     let lockfile_str = lock_file.finish().render_to_string().unwrap(); // TODO: Handle error

@@ -1,7 +1,6 @@
 //! This module contains all the logic for adding conda packages to a lock file.
 
 use std::path::Path;
-use std::str::FromStr;
 use url::Url;
 
 use rattler_conda_types::{ChannelUrl, Platform, PrefixRecord};
@@ -46,30 +45,23 @@ pub fn add_conda_packages(
     lock_file: &mut LockFileBuilder,
     environment: &str,
     conda_packages: &Vec<PrefixRecord>,
+    platform: Platform,
 ) -> miette::Result<()> {
     for prefix_record in conda_packages {
         let repodata = &prefix_record.repodata_record;
         let package = &prefix_record.repodata_record.package_record;
         let channel_url = get_channel_url_from_package_url(&repodata.url);
 
-        if let Ok(platform) = Platform::from_str(&repodata.package_record.subdir) {
-            lock_file.add_conda_package(
-                environment,
-                platform,
-                CondaPackageData::Binary(CondaBinaryData {
-                    package_record: package.clone(),
-                    location: UrlOrPath::Url(repodata.url.clone()),
-                    file_name: repodata.file_name.clone(),
-                    channel: channel_url,
-                }),
-            );
-        } else {
-            // This is a catastrophic error because it leads to missing packages in the lock file
-            return Err(miette::miette!(
-                "Could not find platform for package: {:?}",
-                package.name
-            ));
-        }
+        lock_file.add_conda_package(
+            environment,
+            platform,
+            CondaPackageData::Binary(CondaBinaryData {
+                package_record: package.clone(),
+                location: UrlOrPath::Url(repodata.url.clone()),
+                file_name: repodata.file_name.clone(),
+                channel: channel_url,
+            }),
+        );
     }
 
     Ok(())

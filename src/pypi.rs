@@ -59,11 +59,6 @@ impl PythonPackage {
             metadata,
         })
     }
-
-    /// Returns the appropriate conda [`Platform`] using information in [`PythonPackage::metadata`]
-    pub fn conda_platform(&self) -> Platform {
-        Platform::NoArch
-    }
 }
 
 /// Normalize url according to pip standards
@@ -199,6 +194,7 @@ pub fn match_distribution_with_artifact(
 /// * `platform` - The platform for which the packages are being added.
 /// * `packages` - A vector of `PythonPackage` structs representing the packages to be added.
 /// * `index_url` - A string slice representing the URL of the PyPI index (e.g. "https://pypi.org/simple").
+/// * `platform` - A [`Platform`] enum which represents the subdir the package is installed into (e.g. "linux-64").
 ///
 /// # Examples
 ///
@@ -220,6 +216,7 @@ pub fn add_pypi_packages(
     environment: &str,
     packages: Vec<PythonPackage>,
     index_url: &str,
+    platform: Platform,
 ) -> miette::Result<()> {
     let package_db = get_package_db(index_url)?;
     let artifacts = get_available_artifacts(&package_db, &packages)?;
@@ -240,7 +237,7 @@ pub fn add_pypi_packages(
         if let Some(artifact) = artifacts.get(name) {
             lock_file.add_pypi_package(
                 environment,
-                package.conda_platform(),
+                platform,
                 PypiPackageData {
                     name: PackageName::new(name.to_string())
                         .map_err(|e| miette::miette!("Failed to create package name: {:?}", e))?,
