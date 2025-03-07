@@ -1,12 +1,12 @@
 from conda.plugins import hookimpl, CondaSubcommand
 
-from .conda_rlock import lock_prefix
+from . import cli
 
 
 @hookimpl
 def conda_subcommands():
-    def main(argv):
-        if len(argv) > 0:
-            lock_prefix(argv[0], "./rlock.yaml")
-
-    yield CondaSubcommand("rlock", "subcommand for interacting with rlock", main)
+    yield CondaSubcommand(
+        "rlock",
+        "Lock files using the rattler lock format",
+        lambda args: cli.rlock(args=args, prog_name="conda rlock"),
+    )

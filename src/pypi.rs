@@ -133,7 +133,7 @@ pub fn get_available_artifacts(
                 artifacts.insert(artifact_name, matching_artifact);
             } else {
                 return Err(miette::miette!(
-                    "Unable to generate lock file because of missing information. Environment is most likely corrupted."
+                    "This environment likely has a package that is not available on the index and cannot be locked."
                 ));
             }
         }
