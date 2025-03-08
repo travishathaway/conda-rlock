@@ -350,6 +350,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/simdjson-3.11.5-h84d6215_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/soupsieve-2.5-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/spdlog-1.15.0-h10c9db5_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.8.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-64-2.17-h0157908_18.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h4845f30_101.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tomli-2.2.1-pyhd8ed1ab_1.conda
@@ -2068,8 +2069,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - rust-std-x86_64-unknown-linux-gnu 1.85.0 h2c6d0dc_0
   - sysroot_linux-64 >=2.17
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   size: 208397322
@@ -2126,6 +2125,16 @@ packages:
   license_family: MIT
   size: 193568
   timestamp: 1731184711946
+- conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.8.2-pyhd8ed1ab_0.conda
+  sha256: 32376bf4d4ddaa9b3039a3e12049e549f02e42daee2576f3f3636a5eed6b8fa9
+  md5: 5bf3b12b89f4490d43fa4a6d0a91ae21
+  depends:
+  - pytest >=7.0.0,<9.0.0
+  - python >=3.9,<4.0
+  license: Apache-2.0
+  license_family: APACHE
+  size: 45971
+  timestamp: 1740148719384
 - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-64-2.17-h0157908_18.conda
   sha256: 69ab5804bdd2e8e493d5709eebff382a72fab3e9af6adf93a237ccf8f7dbd624
   md5: 460eba7851277ec1fd80a1a24080787a
