@@ -28,7 +28,7 @@ pyo3 = { version = "0.23.4", features = ["extension-module"] }
 rattler_conda_types = "0.30.0"
 # rattler_installs_packages = "0.10.0"
 rattler_lock = "0.22.39"
-rattler_pypi_interop = { version = "0.1.0", path = "../rattler/crates/rattler_pypi_interop" }
+rattler_pypi_interop = { git = "https://github.com/travishathaway/rattler", branch = "issue-1044" }
 reqwest = { version = "0.12.3", default-features = false, features = ["json", "stream"] }
 reqwest-middleware = "0.4.0"
 serde = { version = "1.0.218", features = ["derive"] }
