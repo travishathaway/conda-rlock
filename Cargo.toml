@@ -25,7 +25,7 @@ miette = { version = "7.5.0", features = ["fancy"] }
 pep440_rs = { version = "0.7.3" }
 pep508_rs = { version = "0.9.2" }
 pyo3 = { version = "0.23.4", features = ["extension-module"] }
-rattler_conda_types = "0.30.0"
+rattler_conda_types = "0.31.3"
 # rattler_installs_packages = "0.10.0"
 rattler_lock = "0.22.39"
 rattler_pypi_interop = { git = "https://github.com/travishathaway/rattler", branch = "issue-1044" }
