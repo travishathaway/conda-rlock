@@ -11,5 +11,4 @@ export OPENSSL_DIR=$PREFIX
 # cross-compiled builds.
 $PYTHON -m pip install . -vv
 
-pushd conda-rlock
 cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
