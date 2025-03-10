@@ -29,10 +29,9 @@ outputs:
             - maturin >=1.2.2,<2
         - ${{ compiler('rust') }}
         - cargo-bundle-licenses
-        - conda
       host:
-        - conda
         - python
+        - python-abi3
         - maturin >=1.2.2,<2
         - pip
         - if: unix
@@ -49,4 +48,5 @@ outputs:
       - python:
           imports:
             - conda_rlock_plugin
-          python_version: ["${{ python_min ~ '.*' }}", "3.12.*"]
+            - conda_rlock_plugin.conda_rlock
+          python_version: ["${{ python_min ~ '.*' }}", "3.13.*"]
