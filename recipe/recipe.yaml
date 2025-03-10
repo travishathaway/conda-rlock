@@ -29,7 +29,9 @@ outputs:
             - maturin >=1.2.2,<2
         - ${{ compiler('rust') }}
         - cargo-bundle-licenses
+        - conda
       host:
+        - conda
         - python
         - maturin >=1.2.2,<2
         - pip
