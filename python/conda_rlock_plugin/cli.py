@@ -53,8 +53,8 @@ def rlock(environment, file) -> None:
     try:
         lock_prefix(str(environment), file)
     except Exception as exc:
-        click.echo(f"Error: {exc}")
-        click.echo("Failed to lock the environment")
+        click.echo(exc, err=True)
+        click.echo("Failed to lock the environment", err=True)
         sys.exit(1)
 
     click.echo("(r)Locked the environment")

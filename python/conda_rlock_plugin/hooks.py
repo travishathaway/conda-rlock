@@ -61,7 +61,7 @@ def conda_post_commands():
                 except Exception as exc:
                     # If locking fails, we simply log the error because it's not critical, but users
                     # should know about it to debug any issues.
-                    logger.error(f"Error: {exc}")
+                    logger.error(exc)
 
     yield CondaPostCommand(
         "rlock_post_command",

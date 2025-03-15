@@ -81,3 +81,8 @@ Random notes:
 ### TODO
 
 - Write tests for the `conda.rs` module
+
+
+## 2025-03-11
+
+We need some more integration tests.

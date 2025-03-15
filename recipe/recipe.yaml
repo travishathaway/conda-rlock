@@ -16,10 +16,7 @@ outputs:
   - package:
       name: conda-rlock
     build:
-      # only build for the minimal python version
       script: build_base
-      python:
-        version_independent: true
     requirements:
       build:
         - if: build_platform != target_platform
@@ -30,17 +27,13 @@ outputs:
         - ${{ compiler('rust') }}
         - cargo-bundle-licenses
       host:
-        - python
-        - python-abi3
-        - maturin >=1.2.2,<2
         - pip
-        - if: unix
-          then:
-            - openssl
+        - python
+        - maturin >=1.2.2,<2
       run:
-        - python >=3.9
         - conda >=24.11.0
         - click
+        - python =${{python}}
       ignore_run_exports:
         from_package:
           - cross-python_${{ target_platform }}
@@ -49,4 +42,3 @@ outputs:
           imports:
             - conda_rlock_plugin
             - conda_rlock_plugin.conda_rlock
-          python_version: ["${{ python_min ~ '.*' }}", "3.13.*"]

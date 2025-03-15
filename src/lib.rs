@@ -82,7 +82,7 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
 
     add_conda_packages(&mut lock_file, environment, &conda_packages, platform).map_err(|err| {
         PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
-            "Error locking conda packages: {:?}",
+            "Error locking conda packages:\n{:?}",
             err
         ))
     })?;
@@ -92,7 +92,7 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
             get_pypi_packages(prefix, &python_package.repodata_record.package_record).map_err(
                 |err| {
                     PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
-                        "Error retrieving PyPI packages: {:?}",
+                        "Error retrieving PyPI packages:\n{:?}",
                         err
                     ))
                 },
@@ -107,16 +107,21 @@ fn lock_prefix(prefix: &str, filename: &str) -> PyResult<()> {
         )
         .map_err(|err| {
             PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
-                "Error locking PyPI packages: {:?}",
+                "Error locking PyPI packages:\n{:?}",
                 err
             ))
         })?;
     }
 
-    let lockfile_str = lock_file.finish().render_to_string().unwrap(); // TODO: Handle error
+    let lockfile_str = lock_file.finish().render_to_string().map_err(|err| {
+        PyErr::new::<pyo3::exceptions::PyOSError, _>(format!(
+            "Error rendering lockfile:\n{:?}",
+            err
+        ))
+    })?;
 
     write_string_to_file(filename, &lockfile_str).map_err(|err| {
-        PyErr::new::<pyo3::exceptions::PyOSError, _>(format!("Error writing lockfile: {:?}", err))
+        PyErr::new::<pyo3::exceptions::PyOSError, _>(format!("Error writing lockfile:\n{:?}", err))
     })?;
 
     Ok(())
