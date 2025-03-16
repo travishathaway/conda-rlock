@@ -3,7 +3,7 @@ authors = ["Travis Hathaway <travis.j.hathaway@gmail.com>"]
 channels = ["conda-forge"]
 description = "Create lock files in conda with rattler_lock"
 name = "conda-rlock"
-platforms = ["linux-64"]
+platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
 version = "0.1.0"
 
 [tasks]
@@ -18,7 +18,6 @@ test = { features = ["build", "test"], solve-group = "default" }
 build = ["build"]
 
 [feature.build.dependencies]
-conda-build = ">=24.11.1"
 maturin = "~=1.2.2"
 pip = "~=23.2.1"
 rust = "~=1.85.0"
