@@ -85,3 +85,4 @@ expected because I already took care of everything the user wanted!".
 [cep-issue-107]: https://github.com/conda/ceps/issues/107
 [post-command]: https://docs.conda.io/projects/conda/en/stable/dev-guide/plugins/post_commands.html
 [pre-command]: https://docs.conda.io/projects/conda/en/stable/dev-guide/plugins/pre_commands.html
+[settings]: https://docs.conda.io/projects/conda/en/stable/dev-guide/plugins/settings.html
