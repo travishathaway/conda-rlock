@@ -1,44 +1,34 @@
-context:
-  name: conda-rlock
-  version: "0.1.0"
-
-recipe:
-  name: ${{ name }}
-  version: ${{ version }}
-
 source:
   - git: https://github.com/travishathaway/conda-rlock
 
-build:
-  number: 0
+package:
+  name: conda-rlock
+  version: 0.1.0
 
-outputs:
-  - package:
-      name: conda-rlock
-    build:
-      script: build_base
-    requirements:
-      build:
-        - if: build_platform != target_platform
-          then:
-            - python
-            - cross-python_${{ target_platform }}
-            - maturin >=1.2.2,<2
-        - ${{ compiler('rust') }}
-        - cargo-bundle-licenses
-      host:
-        - pip
+build:
+  script: build_base
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then:
         - python
+        - cross-python_${{ target_platform }}
         - maturin >=1.2.2,<2
-      run:
-        - conda >=24.11.0
-        - click
-        - python =${{python}}
-      ignore_run_exports:
-        from_package:
-          - cross-python_${{ target_platform }}
-    tests:
-      - python:
-          imports:
-            - conda_rlock_plugin
-            - conda_rlock_plugin.conda_rlock
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
+  host:
+    - pip
+    - python
+    - maturin >=1.2.2,<2
+  run:
+    - conda >=24.11.0
+    - click
+    - python =${{python}}
+  ignore_run_exports:
+    from_package:
+      - cross-python_${{ target_platform }}
+tests:
+  - python:
+      imports:
+        - conda_rlock_plugin
+        - conda_rlock_plugin.conda_rlock
