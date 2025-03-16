@@ -27,7 +27,7 @@ jobs:
       - uses: prefix-dev/setup-pixi@v0.8.1
         with:
           pixi-version: v0.39.0
-          environments: [build]
+          environment: build
 
       - name: Add .pixi/envs/build/bin to the $PATH
         shell: bash
