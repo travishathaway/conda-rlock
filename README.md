@@ -60,7 +60,7 @@ name of the file could also be overridden
 - What if I want to handle locking for multiple platforms?
   - Conda's current UX might make this a little awkward as a "post-command" action.
 
-### Improvement two: improved environment creation from a lock file
+### Improvement two: environment creation from a lock file
 
 > As a user, I want to create an environment directly from a lock file by running
 > `conda create -n my-env -f conda.lock`
